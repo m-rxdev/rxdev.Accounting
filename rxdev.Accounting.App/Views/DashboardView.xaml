@@ -30,6 +30,10 @@
     <ScrollViewer>
 
         <StackPanel>
+            <rsc:ExtendedGrid Style="{StaticResource FormGrid}">
+                <TextBlock Style="{StaticResource InputTitle}" Text="Month period"/>
+                <ui:NumberBox Value="{Binding MonthSpan}" SpinButtonPlacementMode="Inline" Minimum="1" Maximum="6"/>
+            </rsc:ExtendedGrid>
 
             <ItemsControl ItemsSource="{Binding PeriodStatistics}" Style="{StaticResource WrapItemsControl}">
                 <ItemsControl.ItemTemplate>

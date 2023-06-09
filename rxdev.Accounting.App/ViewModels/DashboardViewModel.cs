@@ -7,14 +7,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Documents;
 
 namespace rxdev.Accounting.App.ViewModels;
 
 public class DashboardViewModel
     : ViewModel
 {
-    private const int PeriodCount = 4;
+    private int _monthSpan = 3;
     private PeriodStatisticsAdapter? _yearStatistics;
     private ObservableCollection<PeriodStatisticsAdapter> _periodStatistics = new();
 
@@ -22,6 +21,7 @@ public class DashboardViewModel
         : base(serviceProvider)
     { }
 
+    public int MonthSpan { get => _monthSpan; set => Set(ref _monthSpan, value, action: Reload); }
     public ObservableCollection<PeriodStatisticsAdapter> PeriodStatistics { get => _periodStatistics; set => Set(ref _periodStatistics, value); }
     public PeriodStatisticsAdapter? YearStatistics { get => _yearStatistics; set => Set(ref _yearStatistics, value); }
 
@@ -39,14 +39,17 @@ public class DashboardViewModel
 
         PeriodStatistics.Clear();
         PeriodStatistics.Add(YearStatistics);
-        for (int i = 0; i < PeriodCount; i++)
+        int start = 0;
+        while (start < 12)
         {
+            int end = Math.Min(12, start + MonthSpan);
             PeriodStatistics.Add(new()
             {
-                Title = string.Join("/", Enumerable.Range(1 + i * 12 / PeriodCount, 12 / PeriodCount).Select(j => new DateTime(year, j, 1).ToString("MMM", CultureInfo.InvariantCulture))),
-                Start = new DateTime(year, 1 + i * 12 / PeriodCount, 1),
-                End = new DateTime(year + (i + 1) / PeriodCount, (1 + (i + 1) * (12 / PeriodCount)) % 12, 1),
+                Title = string.Join("/", Enumerable.Range(start + 1, end - start).Select(j => new DateTime(year, j, 1).ToString("MMM", CultureInfo.InvariantCulture))),
+                Start = new DateTime(year, start + 1, 1),
+                End = new DateTime(year + (end / 12), 1 + end % 12, 1),
             });
+            start = end;
         }
 
         Repository<RevenueEntry> revenueRepository = ServiceProvider.GetRequiredService<Repository<RevenueEntry>>();
