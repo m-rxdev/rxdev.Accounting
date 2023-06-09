@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="rxdev.Accounting.App.Views.RevenueEntryEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:rxdev.Accounting.App.Views"
+             xmlns:vm="clr-namespace:rxdev.Accounting.App.ViewModels"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:rsc="clr-namespace:rxdev.Accounting.App.Resources"
+             mc:Ignorable="d" 
+             x:Name="view"
+             IsEnabled="{Binding CanEdit}"
+             d:DataContext="{d:DesignInstance vm:RevenueEntryEditViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <StackPanel>
+            <rsc:ExtendedGrid Style="{StaticResource FormGrid}">
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Amount €"/>
+                <StackPanel>
+                    <ui:NumberBox Minimum="0.01" Maximum="{Binding MaxAmount}" Value="{Binding Item.Amount}" SmallChange="0.01" />
+                    <Slider Maximum="{Binding MaxAmount}" Value="{Binding Item.Amount}" SmallChange="0.01" Margin="20,0,20,0" TickFrequency="0.01" IsSnapToTickEnabled="True"/>
+                </StackPanel>
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Transaction"/>
+                <ComboBox IsEnabled="{Binding CanSelectBankTransaction}" SelectedValue="{Binding Item.BankTransactionId}" ItemsSource="{Binding BankTransactions}" SelectedValuePath="Id">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <rsc:ExtendedGrid ColumnsDefinition="100,200,100">
+                                <rsc:ExtendedGrid.ToolTip>
+                                    <rsc:ExtendedGrid ColumnsDefinition="100, Auto" AutoPlacement="True" RowAutoGeneration="True">
+
+                                        <TextBlock Text="Date"/>
+                                        <TextBlock Text="{Binding SettledDate, StringFormat={StaticResource DateFormat}}"/>
+
+                                        <TextBlock Text="Label"/>
+                                        <TextBlock Text="{Binding Label}"/>
+
+                                        <TextBlock Text="Reference"/>
+                                        <TextBlock Text="{Binding Reference}"/>
+
+                                        <TextBlock Text="Amount"/>
+                                        <TextBlock Text="{Binding Amount, StringFormat={StaticResource MoneyFormat}}"/>
+
+                                    </rsc:ExtendedGrid>
+                                </rsc:ExtendedGrid.ToolTip>
+                                    
+                                <TextBlock Grid.Column="0" Text="{Binding SettledDate, StringFormat={StaticResource DateFormat}}" Foreground="Gray"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Reference}" HorizontalAlignment="Right" Foreground="Gray"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Amount, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Right" Foreground="LightGray"/>
+                            </rsc:ExtendedGrid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Invoice"/>
+                <ComboBox IsEnabled="{Binding CanSelectInvoice}" SelectedValue="{Binding Item.InvoiceId}" ItemsSource="{Binding Invoices}" SelectedValuePath="Id">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <rsc:ExtendedGrid ColumnsDefinition="100,100,100,100">
+                                <TextBlock Grid.Column="0" Text="{Binding IssueDate, StringFormat={StaticResource DateFormat}}" Foreground="Gray"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Number}" Foreground="Gray"/>
+                                <TextBlock Grid.Column="2" Text="{Binding Total, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Right" Foreground="LightGray"/>
+                                <TextBlock Grid.Column="3" Text="{Binding TotalVAT, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Right" Foreground="Gray"/>
+                            </rsc:ExtendedGrid>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </rsc:ExtendedGrid>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

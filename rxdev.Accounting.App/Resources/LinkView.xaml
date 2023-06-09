@@ -1,0 +1,89 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewModels="clr-namespace:rxdev.Accounting.App.ViewModels"
+                    xmlns:views="clr-namespace:rxdev.Accounting.App.Views">
+
+    <DataTemplate DataType="{x:Type viewModels:CompanyInfoEditViewModel}">
+        <views:CompanyInfoEditView />
+    </DataTemplate>
+    
+    <DataTemplate DataType="{x:Type viewModels:BankAccountEditViewModel}">
+        <views:BankAccountEditView />
+    </DataTemplate>    
+    <DataTemplate DataType="{x:Type viewModels:BankAccountGridViewModel}">
+        <views:BankAccountGridView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:BankTransactionGridViewModel}">
+        <views:BankTransactionGridView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:BankTransactionEditViewModel}">
+        <views:BankTransactionEditView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:ContactEditViewModel}">
+        <views:ContactEditView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:ContactGridViewModel}">
+        <views:ContactGridView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:CustomerEditViewModel}">
+        <views:CustomerEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:CustomerGridViewModel}">
+        <views:CustomerGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:InvoiceEditViewModel}">
+        <views:InvoiceEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:InvoiceGridViewModel}">
+        <views:InvoiceGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:InvoiceItemEditViewModel}">
+        <views:InvoiceItemEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:InvoiceItemGridViewModel}">
+        <views:InvoiceItemGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:QuotationEditViewModel}">
+        <views:QuotationEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:QuotationGridViewModel}">
+        <views:QuotationGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:TaxEditViewModel}">
+        <views:TaxEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:TaxGridViewModel}">
+        <views:TaxGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:RevenueEntryEditViewModel}">
+        <views:RevenueEntryEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:RevenueEntryGridViewModel}">
+        <views:RevenueEntryGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:PurchaseEntryEditViewModel}">
+        <views:PurchaseEntryEditView/>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type viewModels:PurchaseEntryGridViewModel}">
+        <views:PurchaseEntryGridView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:DashboardViewModel}">
+        <views:DashboardView/>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type viewModels:PDFPreviewViewModel}">
+        <views:PDFPreviewView/>
+    </DataTemplate>
+
+</ResourceDictionary>

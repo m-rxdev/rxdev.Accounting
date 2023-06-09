@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:cvt="clr-namespace:rxdev.Accounting.App.Resources.Converters">
+    
+    <cvt:BindingValidatorConverter x:Key="BindingValidatorConverter"/>
+    <cvt:DoubleMultiplicationConverter x:Key="DoubleMultiplicationConverter"/>
+    <cvt:AmountToBrushConverter x:Key="AmountToBrushConverter"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+</ResourceDictionary>

@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="rxdev.Accounting.App.Views.BankAccountEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:rsc="clr-namespace:rxdev.Accounting.App.Resources"
+             xmlns:vm="clr-namespace:rxdev.Accounting.App.ViewModels"
+             mc:Ignorable="d"
+             x:Name="view"
+             IsEnabled="{Binding CanEdit}"
+             d:DataContext="{d:DesignInstance vm:BankAccountEditViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <StackPanel>
+            <rsc:ExtendedGrid Style="{StaticResource FormGrid}">
+                <TextBlock Style="{StaticResource InputTitle}" Text="Label" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.Label, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Bank" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.Bank, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="IBAN" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.IBAN, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Open Date" />
+                <DatePicker SelectedDate="{Binding Item.OpenDate}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="RIB" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.RIB, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="BIC" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.BIC, UpdateSourceTrigger=PropertyChanged}" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Api Info" />
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.ApiInfo, UpdateSourceTrigger=PropertyChanged}" />
+            </rsc:ExtendedGrid>
+
+            <GroupBox Header="Associations">
+                <ContentPresenter Content="{Binding RevenueEntryGridViewModel}"/>
+            </GroupBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

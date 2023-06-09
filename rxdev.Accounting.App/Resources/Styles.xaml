@@ -1,0 +1,258 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ui="http://schemas.modernwpf.com/2019"
+                    xmlns:rsc="clr-namespace:rxdev.Accounting.App.Resources"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <sys:String x:Key="MoneyFormat">### ### ##0.00 €</sys:String>
+    <sys:String x:Key="DateFormat">dd/MM/yyyy</sys:String>
+    <sys:String x:Key="DateTimeFormat">HH:mm:ss dd/MM/yyyy</sys:String>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="MinWidth" Value="10"/>
+    </Style>
+
+    <Style x:Key="ViewButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="View" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view,  Path=DataContext.ViewCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="View"/>
+    </Style>
+
+    <Style x:Key="PreviewButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Preview" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view,  Path=DataContext.PreviewCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Preview"/>
+    </Style>
+
+    <Style x:Key="DownloadButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Download" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view,  Path=DataContext.DownloadCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Download"/>
+    </Style>
+
+    <Style x:Key="EditButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Edit" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <!--<Setter Property="Visibility" Value="{Binding ElementName=view, Path=DataContext.EditCommand, Converter={StaticResource BindingValidatorConverter}, ConverterParameter=Visible, FallbackValue=Collapsed}"/>-->
+        <Setter Property="Command" Value="{Binding ElementName=view, Path=DataContext.EditCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Edit"/>
+    </Style>
+
+    <Style x:Key="AddButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="LightGreen"/>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Add" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ToolTip" Value="Add"/>
+        <Setter Property="Command" Value="{Binding AddCommand}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="RemoveButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="Red"/>
+
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Delete" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view,  Path=DataContext.RemoveCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Delete"/>
+    </Style>
+
+    <Style x:Key="SaveButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Save" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding SaveCommand}"/>
+        <Setter Property="ToolTip" Value="Save"/>
+    </Style>
+
+    <Style x:Key="CancelButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Back" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding CancelCommand}"/>
+        <Setter Property="ToolTip" Value="Back"/>
+    </Style>
+    
+    <Style x:Key="SyncButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Sync" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view, Path=DataContext.SyncCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Sync"/>
+    </Style>
+
+    <Style x:Key="UploadButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <ui:SymbolIcon Symbol="Upload" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Command" Value="{Binding ElementName=view, Path=DataContext.UploadCommand}"/>
+        <Setter Property="ToolTip" Value="Upload"/>
+    </Style>
+
+    <Style x:Key="GenerateButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="LightGreen"/>
+        <Setter Property="Content" Value="Generate"/>
+        <Setter Property="Command" Value="{Binding ElementName=view, Path=DataContext.GenerateCommand}"/>
+        <Setter Property="CommandParameter" Value="{Binding}"/>
+        <Setter Property="ToolTip" Value="Generate"/>
+    </Style>
+
+    <Style x:Key="InputTitle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0,0,20,0"/>
+        <Setter Property="Foreground" Value="#CCCCCC"/>
+    </Style>
+
+    <Style x:Key="InputText" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <Style x:Key="InputMultilineText" TargetType="{x:Type TextBox}" BasedOn="{StaticResource InputText}">
+        <Setter Property="MinHeight" Value="70"/>
+        <Setter Property="MaxHeight" Value="200"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="AcceptsReturn" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type ui:NumberBox}" BasedOn="{StaticResource {x:Type ui:NumberBox}}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Minimum" Value="0"/>
+        <Setter Property="SpinButtonPlacementMode" Value="Inline"/>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MinWidth" Value="200"/>
+    </Style>
+
+    <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource {x:Type DatePicker}}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="MinWidth" Value="200"/>
+    </Style>
+
+    <Style x:Key="WrapItemsControl" TargetType="{x:Type ItemsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel Margin="2"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>            
+        </Setter>
+    </Style>
+
+    <Style x:Key="WrapGrid" TargetType="{x:Type rsc:ExtendedGrid}" >
+        <Setter Property="Width" Value="400"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="ColumnsDefinition" Value="100,*"/>
+        <Setter Property="AutoPlacement" Value="True"/>
+        <Setter Property="RowAutoGeneration" Value="True"/>
+    </Style>
+
+    <Style x:Key="FormGrid" TargetType="{x:Type rsc:ExtendedGrid}" >
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="ColumnsDefinition" Value="200,*"/>
+        <Setter Property="AutoPlacement" Value="True"/>
+        <Setter Property="RowAutoGeneration" Value="True"/>
+    </Style>
+
+    <Style TargetType="{x:Type DataGridCell}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource DataGridCellBackgroundBrush}" />
+        <Setter Property="Foreground" Value="LightGray" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="MinHeight" Value="{DynamicResource DataGridRowMinHeight}" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <ui:DataGridCellPresenter
+					Background="{TemplateBinding Background}"
+					CurrencyVisualBrush="{DynamicResource DataGridCurrencyVisualPrimaryBrush}"
+					CurrencyVisualThickness="0"
+					FocusVisualPrimaryBrush="{DynamicResource DataGridCellFocusVisualPrimaryBrush}"
+					FocusVisualPrimaryThickness="0"
+					FocusVisualSecondaryBrush="{DynamicResource DataGridCellFocusVisualSecondaryBrush}"
+					FocusVisualSecondaryThickness="0"
+					IsCurrencyVisualVisible="{TemplateBinding IsSelected}"
+					IsFocusVisualVisible="{TemplateBinding IsKeyboardFocusWithin}"
+					MinHeight="{TemplateBinding MinHeight}"
+					SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AmountDataGridCell" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="Margin" Value="5,0,5,0"/>
+    </Style>
+
+    <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
+        <Setter Property="Margin" Value="0,20,0,0"/>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="rxdev.Accounting.App.Views.QuotationEditView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:rxdev.Accounting.App.Views"
+             xmlns:vm="clr-namespace:rxdev.Accounting.App.ViewModels"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:rsc="clr-namespace:rxdev.Accounting.App.Resources"
+             mc:Ignorable="d" 
+             x:Name="view"
+             IsEnabled="{Binding CanEdit}"
+             d:DataContext="{d:DesignInstance vm:QuotationEditViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <StackPanel>
+            <rsc:ExtendedGrid Style="{StaticResource FormGrid}">
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Number"/>
+                <TextBox IsEnabled="False" Style="{StaticResource InputText}" Text="{Binding Item.Number}"/>
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Customer"/>
+                <ComboBox SelectedValue="{Binding Item.CustomerId}" ItemsSource="{Binding Customers}" SelectedValuePath="Id" DisplayMemberPath="Name" />
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Title"/>
+                <TextBox Style="{StaticResource InputText}" Text="{Binding Item.Title, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Issue date"/>
+                <DatePicker SelectedDate="{Binding Item.IssueDate}"/>
+
+                <TextBlock Style="{StaticResource InputTitle}" Text="Validity (days)"/>
+                <DockPanel>
+                    <ui:NumberBox DockPanel.Dock="Left" Value="{Binding Item.ValidityDays}" Minimum="1" Maximum="365"/>
+                    <TextBlock Style="{StaticResource InputTitle}" HorizontalAlignment="Left" Text="{Binding Item.ValidityDate, StringFormat='=> {0:dd/MM/yyyy}', Mode=OneWay}" Margin="10,0,10,0"/>
+                </DockPanel>
+            </rsc:ExtendedGrid>
+
+            <ContentPresenter Content="{Binding InvoiceItemGridViewModel}"/>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

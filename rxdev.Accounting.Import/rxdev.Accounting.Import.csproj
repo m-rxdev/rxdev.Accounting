@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="30.0.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\rxdev.Accounting.Banking.Qonto\rxdev.Accounting.Banking.Qonto.csproj" />
+    <ProjectReference Include="..\rxdev.Accounting.Model\rxdev.Accounting.Model.csproj" />
+    <ProjectReference Include="..\rxdev.Accounting.Persistence\rxdev.Accounting.Persistence.csproj" />
+    <ProjectReference Include="..\rxdev.Accounting\rxdev.Accounting.csproj" />
+  </ItemGroup>
+
+</Project>
