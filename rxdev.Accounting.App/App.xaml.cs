@@ -20,6 +20,8 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        string dataBasePath = $"{Environment.ProcessPath}.db.sqlite";
+
         _host = Host.CreateDefaultBuilder().ConfigureServices((_, c) => {
             foreach (Type type in AssemblyExtension.GetLocalTypes("rxdev.*.dll").Where(t => !t.IsInterface && t.Name == "InjectionProfile"))
                 Activator.CreateInstance(type, c);
@@ -31,18 +33,23 @@ public partial class App : Application
             }).CreateMapper());
 
             IConfigurationRoot configurationRoot = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"{Environment.ProcessPath}.appsettings.json", true)
+                .AddJsonFile("appsettings.json", true)
                 .AddEnvironmentVariables()
                 .Build();
 
+            string? path = configurationRoot.GetValue<string>("DataBasePath");
+            if (path is not null)
+                dataBasePath = path;
+
             c.AddSingleton<IConfiguration>(configurationRoot);
             c.AddTransient<FreebeDbInitializer>();
-            c.AddDbContext<AccountingDbContext>(options => options.UseSqlite("data source=db.sqlite"));
+            c.AddDbContext<AccountingDbContext>(options => options.UseSqlite($"data source={dataBasePath}"));
         }).Build();
 
         IConfiguration configuration = _host.Services.GetRequiredService<IConfiguration>();
         if(configuration.GetValue<bool>("ResetDataBase") == true)
-            File.Delete(@"db.sqlite");
+            File.Delete(dataBasePath);
 
         DbContext dbContext = _host.Services.GetRequiredService<AccountingDbContext>();
         dbContext.Database.EnsureCreated();
