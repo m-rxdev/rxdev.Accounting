@@ -51,10 +51,10 @@
 
                                     <rsc:ExtendedGrid Style="{StaticResource SectionGrid}">
                                             <TextBlock Style="{StaticResource InputTitle}" Text="Revenue" />
-                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Revenue, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Revenue, StringFormat={StaticResource MoneyFormat}}" />
 
                                             <TextBlock Style="{StaticResource InputTitle}" Text="Purchase" />
-                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Purchase, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Purchase, StringFormat={StaticResource MoneyFormat}}" />
                                         </rsc:ExtendedGrid>
                                     </DockPanel>
                                     
@@ -63,13 +63,13 @@
 
                                     <rsc:ExtendedGrid Style="{StaticResource SectionGrid}">
                                             <TextBlock Style="{StaticResource InputTitle}" Text="VAT In" />
-                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.VATIn, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.VATIn, StringFormat={StaticResource MoneyFormat}}" />
 
                                             <TextBlock Style="{StaticResource InputTitle}" Text="VAT Out" />
-                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.VATOut, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.VATOut, StringFormat={StaticResource MoneyFormat}}" />
 
                                             <TextBlock Style="{StaticResource InputTitle}" Text="Result" />
-                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.Result, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                            <TextBlock Style="{StaticResource InputTitle}" Text="{Binding VATStatistics.Result, StringFormat={StaticResource MoneyFormat}}" />
                                         </rsc:ExtendedGrid>
                                     </DockPanel>
                                     
@@ -81,7 +81,7 @@
                                                 <DataTemplate>
                                                 <rsc:ExtendedGrid Style="{StaticResource SectionGrid}">
                                                         <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Tax.Name}" />
-                                                        <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Result, StringFormat={StaticResource MoneyFormat}}" HorizontalAlignment="Left" />
+                                                        <TextBlock Style="{StaticResource InputTitle}" Text="{Binding Result, StringFormat={StaticResource MoneyFormat}}" />
                                                     </rsc:ExtendedGrid>
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
