@@ -37,8 +37,6 @@
             <DataGridTextColumn Header="Issue date" Binding="{Binding IssueDate, StringFormat={StaticResource DateFormat}}" SortDirection="Descending"/>
             <DataGridTextColumn Header="Execution date" Binding="{Binding ExecutionDate, StringFormat={StaticResource DateFormat}}"/>
             <DataGridTextColumn Width="*" Header="Title" Binding="{Binding Title}"/>
-            
-
 
             <DataGridTemplateColumn>
                 <DataGridTemplateColumn.CellTemplate>
@@ -111,7 +109,19 @@
                                             </Style.Triggers>
                                         </Style>
                                     </DockPanel.Style>
-                                    <TextBlock Text="√" FontWeight="Bold" FontSize="20" Foreground="Green" TextAlignment="Right"/>
+                                    <TextBlock DockPanel.Dock="Right" Text="√" FontWeight="Bold" FontSize="20" Foreground="Green" TextAlignment="Right"/>
+                                    <ItemsControl VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" ItemsSource="{Binding PaymentDates}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Margin="0,0,10,0" Foreground="Green" Text="{Binding StringFormat={StaticResource DateFormat}}"/>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
                                 </DockPanel>
                             </Grid>
                         </Grid>

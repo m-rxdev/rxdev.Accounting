@@ -1,5 +1,7 @@
 ﻿using rxdev.Accounting.Model;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -23,9 +25,7 @@ public class InvoiceAdapter
     private decimal _total;
     private decimal _totalVAT;
     private ObservableCollection<RevenueEntryAdapter> _revenueEntries = new();
-    private ObservableCollection<PurchaseEntryAdapter> _purchaseEntries = new();
 
-    public ObservableCollection<PurchaseEntryAdapter> PurchaseEntries { get => _purchaseEntries; set => SetDirty(ref _purchaseEntries, value); }
     public ObservableCollection<RevenueEntryAdapter> RevenueEntries { get => _revenueEntries; set => SetDirty(ref _revenueEntries, value); }
     public decimal TotalVAT { get => _totalVAT; set => SetDirty(ref _totalVAT, value); }
     public decimal Total { get => _total; set => SetDirty(ref _total, value); }
@@ -46,4 +46,5 @@ public class InvoiceAdapter
     public double Progress => (DateTime.Now - ExecutionDate).Days / (double)PaymentDays;
     public int ProgressDays => (DateTime.Now - ExecutionDate).Days;
     public double PaymentProgress => (double)RevenueEntries.Sum(e => e.Amount) / (double)(Total + TotalVAT);
+    public IEnumerable<DateTime> PaymentDates => RevenueEntries.Select(e => e.BankTransaction!.SettledDate).OrderBy(e => e);
 }

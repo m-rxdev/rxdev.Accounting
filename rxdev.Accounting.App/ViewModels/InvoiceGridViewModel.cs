@@ -31,7 +31,7 @@ public class InvoiceGridViewModel
         => base.GetQuery(tracking)
         .Include(e => e.Customer)
         .Include(e => e.Items)
-        .Include(e => e.RevenueEntries);
+        .Include(e => e.RevenueEntries).ThenInclude(e => e.BankTransaction);
 
     protected override bool CanEdit(InvoiceAdapter? item)
         => true; 
