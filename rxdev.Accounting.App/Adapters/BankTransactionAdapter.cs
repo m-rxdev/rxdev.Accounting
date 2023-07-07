@@ -34,4 +34,7 @@ public class BankTransactionAdapter
     public string Associations => IsCredit
         ? string.Join(", ", RevenueEntries.Select(e => e.Invoice?.Number))
         : string.Join(", ", PurchaseEntries.Select(e => e.Attachment!.FileName));
+    public decimal VAT => IsCredit
+        ? RevenueEntries.Sum(e => e.Invoice!.TotalVAT)
+        : - PurchaseEntries.Sum(e => e.VAT);
 }

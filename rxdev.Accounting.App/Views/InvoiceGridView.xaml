@@ -110,15 +110,15 @@
                                         </Style>
                                     </DockPanel.Style>
                                     <TextBlock DockPanel.Dock="Right" Text="√" FontWeight="Bold" FontSize="20" Foreground="Green" TextAlignment="Right"/>
-                                    <ItemsControl VerticalAlignment="Center" HorizontalAlignment="Right" DockPanel.Dock="Right" ItemsSource="{Binding PaymentDates}">
+                                    <ItemsControl VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0" DockPanel.Dock="Right" ItemsSource="{Binding PaymentDates}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"/>
+                                                <ui:SimpleStackPanel Spacing="10" Orientation="Horizontal" />
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Margin="0,0,10,0" Foreground="Green" Text="{Binding StringFormat={StaticResource DateFormat}}"/>
+                                                <TextBlock Foreground="Green" Text="{Binding StringFormat={StaticResource DateFormat}}"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
