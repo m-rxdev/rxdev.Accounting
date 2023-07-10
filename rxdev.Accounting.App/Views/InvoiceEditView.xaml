@@ -59,6 +59,9 @@
                             <DataTrigger Binding="{Binding Item.State}" Value="Imported">
                                 <Setter Property="Visibility" Value="Collapsed"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Item.State}" Value="Locked">
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </GroupBox.Style>

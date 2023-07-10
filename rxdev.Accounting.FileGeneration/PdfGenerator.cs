@@ -48,7 +48,18 @@ public static class PdfGenerator
 {
     private static Unit PageWidth = Unit.FromPoint(595 - 100);
     private static Color LightColor = new(180, 180, 180);
-    private static Color GlowingColor = new Color(22, 198, 12);
+    private static Color GlowingColor = new(22, 198, 12);
+    private static Dictionary<InvoiceItemUnit, string> FRUnits = new()
+    {
+        { InvoiceItemUnit.Day, "jour" },
+        { InvoiceItemUnit.Hour, "heure" },
+        { InvoiceItemUnit.Unit, "unité" },
+        { InvoiceItemUnit.Click, "clic" },
+        { InvoiceItemUnit.Page, "page" },
+        { InvoiceItemUnit.Line, "ligne" },
+        { InvoiceItemUnit.Word, "mot" },
+        { InvoiceItemUnit.Character, "caractère" },
+    };
 
     static PdfGenerator()
     {
@@ -206,7 +217,8 @@ public static class PdfGenerator
         Table table = parent.AddTable(PageWidth, 1, 5);
 
         table.AddRow().Populate("CLIENT", customer.Name);
-        table.AddRow().Populate("SIRET", customer.SIRET);
+        //table.AddRow().Populate("SIRET", customer.SIRET);
+        table.AddRow().Populate("SIREN", customer.SIRET?.Substring(0, 9));
         table.AddRow().Populate("N° TVA", customer.VAT);
         table.AddRow().Populate("ADRESSE", customer.Address);
         table.AddRow().Populate("ÉMIS LE", invoice.IssueDate.ToString("dd/MM/yyyy"));
@@ -223,7 +235,8 @@ public static class PdfGenerator
         Table table = parent.AddTable(PageWidth, 1, 5);
 
         table.AddRow().Populate("CLIENT", customer.Name);
-        table.AddRow().Populate("SIRET", customer.SIRET);
+        //table.AddRow().Populate("SIRET", customer.SIRET);
+        table.AddRow().Populate("SIREN", customer.SIRET?.Substring(0, 9));
         table.AddRow().Populate("N° TVA", customer.VAT);
         table.AddRow().Populate("ADRESSE", customer.Address);
         table.AddRow().Populate("ÉMIS LE", quotation.IssueDate.ToString("dd/MM/yyyy"));
@@ -250,13 +263,12 @@ public static class PdfGenerator
         header.Format.Alignment = ParagraphAlignment.Right;
         header[0].Format.Alignment = ParagraphAlignment.Left;
 
-        for(int i = 0; i <50; i++)
         foreach (InvoiceItem item in items)
         {
             row = table.AddRow();
             row.Populate(
                 "", 
-                item.Quantity.ToString(item.Quantity % 1 == 0 ? "F0" : "F2") + $" {item.Unit}",
+                item.Quantity.ToString(item.Quantity % 1 == 0 ? "F0" : "F2") + $" {GetUnit(item.Quantity, item.Unit)}",
                 item.VATRate.ToString("P0"),
                 FormatMoney(item.Price),
                 FormatMoney((decimal)item.Quantity * item.Price),
@@ -295,6 +307,11 @@ public static class PdfGenerator
             table.Rows[i][2].Format.Alignment = ParagraphAlignment.Right;
         }
     }
+
+    private static string GetUnit(double quantity, InvoiceItemUnit unit)
+        => (FRUnits.TryGetValue(unit, out string? value)
+        ? value : unit.ToString())
+        + (quantity > 1 ? "s" : string.Empty);
 
     private static void DrawBankingInfo(Section parent, BankAccount bankAccount)
     {

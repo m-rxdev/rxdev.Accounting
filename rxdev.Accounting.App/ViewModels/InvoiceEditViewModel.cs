@@ -63,10 +63,14 @@ public class InvoiceEditViewModel
             return;
         }
 
+        Item.IsDirty = false;
+
         if (Item.Id == 0)
             Item.CustomerId = Customers.First().Id;
 
-        Item.IsDirty = false;
+        if (Item.State == InvoiceState.Draft)
+            UpdateTotal();
+
         InvoiceItemGridViewModel.Load(Item);
         RevenueEntryGridViewModel.Load(Item);
     }
@@ -74,6 +78,9 @@ public class InvoiceEditViewModel
     public override void Reload()
     {
         base.Reload();
+
+        if (Item.State == InvoiceState.Draft)
+            UpdateTotal();
 
         InvoiceItemGridViewModel.Reload();
         RevenueEntryGridViewModel.Reload();
@@ -86,8 +93,36 @@ public class InvoiceEditViewModel
     {
         // Sure ?
         // Unsaved changes ?
-        using FileStream fs = File.OpenWrite(@"D:\test.pdf");
-        Generate(fs);
+        using MemoryStream ms = new();
+        Generate(ms);
+
+        using IServiceScope scope = ServiceProvider.CreateScope();
+        UnitOfWork unitOfWork = scope.ServiceProvider.GetRequiredService<UnitOfWork>();
+        Repository<Attachment> repo = scope.ServiceProvider.GetRequiredService<Repository<Attachment>>();
+        if (Item.AttachmentId.HasValue)
+            repo.Remove(Item.AttachmentId.Value);
+        Attachment attachment = new()
+        {
+            FileName = $"{Item.Number}.pdf",
+            EntityData = new EntityData { Data = ms.ToArray() }
+        };
+        repo.Add(attachment);
+        unitOfWork.Save();
+
+        Item.AttachmentId = attachment.Id;
+        Item.State = InvoiceState.Locked;
+        UpdateTotal();
+        Save();
+    }
+
+    private void UpdateTotal()
+    {
+        using IServiceScope scope = ServiceProvider.CreateScope();
+        Repository<InvoiceItem> repo = scope.ServiceProvider.GetRequiredService<Repository<InvoiceItem>>();
+        InvoiceItem[] items = repo.AsQueryable().Where(e => e.InvoiceId == Item.Id).ToArray();
+
+        Item.Total = items.Sum(e => (decimal)e.Quantity * e.Price);
+        Item.TotalVAT = items.Sum(e => (decimal)e.Quantity * e.Price * (decimal)e.VATRate);
     }
 
     private bool CanAdd()
