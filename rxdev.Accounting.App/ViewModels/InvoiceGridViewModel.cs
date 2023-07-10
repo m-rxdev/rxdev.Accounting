@@ -7,6 +7,7 @@ using rxdev.Accounting.FileGeneration;
 using rxdev.Accounting.Model;
 using rxdev.Accounting.Persistence;
 using System;
+using System.IO;
 using System.Linq;
 using System.Windows.Input;
 
@@ -40,6 +41,7 @@ public class InvoiceGridViewModel
 
     private bool CanDownload(InvoiceAdapter? item)
         => item is not null
+        && item.AttachmentId.HasValue
         && item.State != InvoiceState.Draft;
 
     private bool CanUpload()
@@ -47,6 +49,27 @@ public class InvoiceGridViewModel
 
     private void OnDownload(InvoiceAdapter? item)
     {
+        if (item is null
+            || !item.AttachmentId.HasValue)
+            return;
+
+        Repository<Attachment> repo = ServiceProvider.GetRequiredService<Repository<Attachment>>();
+        Attachment? attachment = repo.AsQueryable().Where(e => e.Id == item.AttachmentId.Value).Include(e => e.EntityData).FirstOrDefault();
+
+        if (attachment is null
+            || attachment.EntityData is null)
+            return;
+
+        SaveFileDialog sfd = new()
+        {
+            FileName = $"{item.Number}.pdf",
+            Filter = "PDF file|*.pdf",
+        };
+
+        if (sfd.ShowDialog() != true)
+            return;
+
+        File.WriteAllBytes(sfd.FileName, attachment.EntityData.Data);
     }
 
     private void OnUpload()
