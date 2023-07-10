@@ -1,14 +1,9 @@
 ﻿using MigraDocCore.DocumentObjectModel;
 using MigraDocCore.DocumentObjectModel.Tables;
 using MigraDocCore.Rendering;
-using PdfSharpCore.Drawing;
 using PdfSharpCore.Fonts;
-using PdfSharpCore.Pdf;
-using PdfSharpCore.Pdf.Advanced;
-using PdfSharpCore.Utils;
 using rxdev.Accounting.Model;
-using System.Globalization;
-using System.Runtime.CompilerServices;
+using System.Reflection;
 
 namespace rxdev.Accounting.FileGeneration;
 public class FileFontResolver : IFontResolver
@@ -23,11 +18,12 @@ public class FileFontResolver : IFontResolver
 
     public byte[] GetFont(string faceName)
     {
-        if(faceName.StartsWith("fonts/"))
+        if(faceName.StartsWith("fonts."))
         {
-            using var ms = new MemoryStream();
-            using var fs = File.Open(faceName, FileMode.Open);
-            fs.CopyTo(ms);
+            var assembly = GetType().GetTypeInfo().Assembly;
+            using Stream resource = assembly.GetManifestResourceStream($"rxdev.Accounting.FileGeneration.{faceName}")!;
+            using MemoryStream ms = new();
+            resource.CopyTo(ms);
             ms.Position = 0;
             return ms.ToArray();
         }
@@ -38,8 +34,8 @@ public class FileFontResolver : IFontResolver
     public FontResolverInfo ResolveTypeface(string familyName, bool isBold, bool isItalic)
         => familyName switch
         {
-            "Avenir Next LT Pro" when isBold => new FontResolverInfo("fonts/Avenir Next LT Pro Medium.ttf"),
-            "Avenir Next LT Pro" => new FontResolverInfo("fonts/Avenir Next LT Pro Regular.ttf"),
+            "Avenir Next LT Pro" when isBold => new FontResolverInfo("fonts.Avenir Next LT Pro Medium.ttf"),
+            "Avenir Next LT Pro" => new FontResolverInfo("fonts.Avenir Next LT Pro Regular.ttf"),
             _ => _defaultResolver.ResolveTypeface(familyName, isBold, isItalic)
         };
 }

@@ -8,7 +8,7 @@ public class InvoiceItem
     public string? Description { get; set; }
     public Invoice? Invoice { get; set; }
     public int? InvoiceId { get; set; }
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } = 500;
     public double Quantity { get; set; } = 1;
     public Quotation? Quotation { get; set; }
     public int? QuotationId { get; set; }

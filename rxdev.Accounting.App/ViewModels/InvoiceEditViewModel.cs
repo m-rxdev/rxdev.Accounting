@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Windows.Input;
 using rxdev.Accounting.App.Adapters;
 using rxdev.Accounting.App.Resources.MVVM;
 using rxdev.Accounting.FileGeneration;
@@ -9,7 +8,6 @@ using rxdev.Accounting.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
