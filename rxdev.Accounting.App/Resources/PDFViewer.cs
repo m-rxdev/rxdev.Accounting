@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Microsoft.Web.WebView2.Wpf;
+﻿using Microsoft.Web.WebView2.Wpf;
 using rxdev.Accounting.Model;
 using System;
 using System.IO;
@@ -11,6 +9,7 @@ namespace rxdev.Accounting.App.Resources;
 public class PDFViewer
     : WebView2
 {
+
     public new static readonly DependencyProperty SourceProperty =
         DependencyProperty.RegisterAttached("Source", typeof(object), typeof(PDFViewer), new PropertyMetadata(null, OnSourceChanged));
 
@@ -22,6 +21,11 @@ public class PDFViewer
             return;
 
         viewer.OnSourceChanged(e.NewValue);
+    }
+
+    static PDFViewer()
+    {
+        Environment.SetEnvironmentVariable("WEBVIEW2_USER_DATA_FOLDER", Path.Combine(Path.GetTempPath(), "rxdev.Accounting"));
     }
 
     private void OnSourceChanged(object value)
