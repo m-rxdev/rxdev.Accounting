@@ -99,6 +99,24 @@ public class InvoiceGridViewModel
         => item is not null
         && item.State == InvoiceState.Draft;
 
+    protected override bool CanView(InvoiceAdapter? item)
+        => item is not null
+        && item.AttachmentId.HasValue;
+
+    protected override void OnView(InvoiceAdapter? item)
+    {
+        if (item is null
+            || !item.AttachmentId.HasValue) 
+            return;
+
+        NavigationService.NavigateTo<PDFPreviewViewModel>(
+            ServiceProvider.GetRequiredService<Repository<Attachment>>()
+                .AsQueryable()
+                .Include(e => e.EntityData)
+                .First(e => e.Id == item.AttachmentId.Value)
+                .EntityData!);
+    }
+
     public override void Load(params object[] args)
     {
         //decimal total = ServiceProvider.GetRequiredService<Repository<InvoiceItem>>().AsQueryable().Sum(e => e.Price * e.Quantity);
